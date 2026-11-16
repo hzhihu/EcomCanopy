@@ -14,6 +14,7 @@
 | 需求与实施方案 | 已冻结，见 `docs/requirements/website-plan-v1.2.md`（V1.2） |
 | 18 条关键决策 | 已冻结，见 `docs/decisions.md` |
 | 项目文档骨架 | README、AGENTS、ARCHITECTURE、CONTEXT、CHANGELOG、decisions |
+| Git 仓库 | `github.com/hzhihu/EcomCanopy`，主分支 `main` |
 | 域名 | `ecomcanopy.site`，已在 Cloudflare 托管 |
 | 邮箱 | `hzhihu@`（主）、`business@`（商务），待配置 Email Routing |
 | 项目状态 | Skills Hub = Development；差评洞察、Listing 体检 = Research |
