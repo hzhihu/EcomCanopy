@@ -45,14 +45,16 @@
 │   ├── decisions.md              冻结决策
 │   ├── requirements/             需求原文
 │   ├── design/                   Phase 1 产出（设计规范、Tokens）
-│   ├── architecture/             架构图、技术说明
+│   ├── architecture/             架构图、调研报告
 │   ├── content/                  内容素材、脱敏后的项目资料
 │   └── deployment/               部署与回滚文档
+├── src/                          Astro 源码（仓库根目录，不使用 website/）
+├── public/                       静态资源
 ├── AGENTS.md
 ├── ARCHITECTURE.md
 ├── CONTEXT.md
 ├── CHANGELOG.md
-└── website/                      代码根目录（Phase 0 后确定）
+└── LICENSE                       模板 MIT 许可证（保留）
 ```
 
 `docs/` 不进入部署产物。
@@ -62,7 +64,6 @@
 ## 本地开发（Phase 0 后生效）
 
 ```bash
-cd website
 pnpm install
 pnpm dev        # 本地预览
 pnpm build      # 构建静态产物

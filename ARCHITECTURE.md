@@ -128,11 +128,26 @@ Cloudflare Tunnel 映射域名
 
 ---
 
-## 8. 待定项（Phase 0 之后填写）
+## 8. 待定项
 
-- [ ] 起始模板与代码根目录命名
-- [ ] 目录结构（是否沿用模板）
-- [ ] 样式组织方式（全局 CSS 变量 vs SCSS 模块）
+- [x] 起始模板：`ricocc/ricoui-astro-starter`
+- [x] 代码根目录：仓库根目录（不使用 `website/`）
+- [x] 深色模式：保留代码，隐藏入口，默认始终浅色
+- [ ] 样式组织方式（`global.css` 与 `themes.css` 的裁剪范围）
 - [ ] Skills Hub 仓库地址、端口、构建方式
-- [ ] 是否需要 404 自定义插画与 OG 图生成方案
+- [ ] OG 图生成方案（静态图 vs 构建期生成）
 - [ ] CI 是否使用 GitHub Actions
+
+### 代码根目录布局（已定）
+
+```
+.
+├── docs/                 项目文档，不进入部署
+├── src/                  Astro 源码（来自 starter）
+├── public/              静态资源
+├── astro.config.mjs
+├── package.json
+├── LICENSE               保留模板 MIT 许可证与版权声明
+└── README.md
++ Dockerfile / docker-compose.yml / nginx.conf（Phase 5）
+```
