@@ -50,6 +50,22 @@
 
 ---
 
+## 11. 修订记录
+
+本节记录对前 10 条的正式修订。修订必须由用户明确授权，AI 智能体不得自行添加。
+
+### 2026-11-16 · 模板与技术栈
+
+**授权来源：** 用户在 Phase 0 模板调研报告后明确选择「方案 B，接受 Tailwind」。
+
+- 起始模板：采用 `ricocc/ricoui-astro-starter`（方案 B）。
+- 样式方案：由「Sass / CSS Variables」修订为 **Tailwind CSS v4 + CSS Variables**。设计 Token 仍以 CSS 变量为唯一来源，Sass 仅在必要时使用。
+- 依据：`docs/architecture/phase-0-template-review.md`。
+
+**尚未确定（等待授权）：** 代码根目录命名、是否删除模板深色模式与主题切换器、是否保留模板 MIT LICENSE 与作者版权声明。
+
+---
+
 ## 附：已确认的项目状态
 
 | 项目 | projectType | projectStatus |

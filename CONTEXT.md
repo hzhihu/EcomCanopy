@@ -1,7 +1,7 @@
 # CONTEXT.md —— 当前进展快照
 
 最后更新：2026-11-16
-当前阶段：**Phase 0 未启动**
+当前阶段：**Phase 0 已完成，待确认 3 项后进入 Phase 1**
 
 本文件只记录「现在在哪里」。规则见 `AGENTS.md`，冻结决策见 `docs/decisions.md`。
 
@@ -12,8 +12,10 @@
 | 项 | 结果 |
 | --- | --- |
 | 需求与实施方案 | 已冻结，见 `docs/requirements/website-plan-v1.2.md`（V1.2） |
-| 18 条关键决策 | 已冻结，见 `docs/decisions.md` |
 | 项目文档骨架 | README、AGENTS、ARCHITECTURE、CONTEXT、CHANGELOG、decisions |
+| 18 条关键决策 + 第 11 节修订 | 已冻结，见 `docs/decisions.md` |
+| Phase 0 模板调研 | 已完成，报告见 `docs/architecture/phase-0-template-review.md` |
+| 起始模板 | 已选定 `ricocc/ricoui-astro-starter`，Tailwind v4 已获批准 |
 | Git 仓库 | `github.com/hzhihu/EcomCanopy`，主分支 `main` |
 | 域名 | `ecomcanopy.site`，已在 Cloudflare 托管 |
 | 邮箱 | `hzhihu@`（主）、`business@`（商务），待配置 Email Routing |
@@ -23,8 +25,7 @@
 
 ## 2. 未开始
 
-- Phase 0 模板调研
-- 视觉设计规范与 Design Tokens
+- 视觉设计规范与 Design Tokens（Phase 1）
 - 代码初始化
 - 内容素材（真实业务细节、文章原料、头像）
 - NAS 部署与 Cloudflare Tunnel 配置
@@ -35,25 +36,26 @@
 
 | # | 事项 | 影响 | 是否阻塞 |
 | --- | --- | --- | --- |
-| 1 | 起始模板选择（Phase 0 报告后决定） | 目录结构、开发起点 | 阻塞 Phase 1 |
-| 2 | 头像图片文件 | About / Contact 页 | 不阻塞（用文字占位） |
-| 3 | 「易贸森」重名与商标查询 | 对外宣传口径 | 不阻塞（不宣称商标） |
-| 4 | 导航入口如何处理 `/ai-agents` 与 `/fde` | Header 结构 | 阻塞 Phase 1 |
-| 5 | 首批文章素材（每篇约 200 字原始素材） | Phase 4 内容 | 阻塞 Phase 4 |
-| 6 | Cloudflare Email Routing 是否已配置 | 联系页可用性 | 阻塞 Phase 5 |
+| 1 | 代码根目录命名（`website/` 还是仓库根） | Docker 构建上下文、目录结构 | 阻塞 Phase 2 |
+| 2 | 是否删除模板的深色模式与主题切换器 | 样式体系与决策 6 一致 | 阻塞 Phase 1 |
+| 3 | 是否保留模板 MIT LICENSE 与作者版权声明 | 合规 | 不阻塞 |
+| 4 | 头像图片文件 | About / Contact 页 | 不阻塞（用文字占位） |
+| 5 | 「易贸森」重名与商标查询 | 对外宣传口径 | 不阻塞（不宣称商标） |
+| 6 | 导航入口如何处理 `/ai-agents` 与 `/fde` | Header 结构 | 阻塞 Phase 1 |
+| 7 | 首批文章素材（每篇约 200 字原始素材） | Phase 4 内容 | 阻塞 Phase 4 |
+| 8 | Cloudflare Email Routing 是否已配置 | 联系页可用性 | 阻塞 Phase 5 |
 
 ---
 
 ## 4. 下一步
 
-**Phase 0：模板调研**
+**Phase 1：品牌视觉设计**（待上述阻塞项确认后开始）
 
-- 审查 `ricocc/public-portfolio-site`、`ricocc/ricoui-astro-starter`
-- 输出报告：技术栈、结构、复用性、响应式、SEO、样式组织、内容管理、依赖维护、二次开发成本
-- 输出与冻结决策的匹配度结论（浅色视觉、纯中文、无 i18n、静态部署）
-- 不写业务页面、不改模板、不定视觉方案
+- 基于 `ricoui-astro-starter` 的 Token 体系，裁定为单一浅色主题 + 深色局部块
+- 输出设计规范、Design Tokens、关键组件视觉稿、首页桌面/移动候选稿
+- 不写正式业务页面，不改品牌定位
 
-完成条件：用户明确选择模板或明确要求自建。
+完成条件：用户冻觉视觉规范。
 
 ---
 

@@ -33,7 +33,8 @@
 | --- | --- | --- |
 | Astro | 站点框架，SSG | 已定 |
 | TypeScript | 类型安全 | 已定 |
-| Sass / CSS Variables | 样式与 Design Tokens | 已定 |
+| Sass / CSS Variables | 设计 Token | 修订：主方案为 Tailwind CSS v4 + CSS 变量 |
+| Tailwind CSS v4 | 样式实现 | 已定（决策第 11 节修订） |
 | Astro Content Collections | 项目与文章内容管理 | 已定 |
 | MDX | 富文本内容 | 已定 |
 | Lucide | 图标 | 已定 |
@@ -41,9 +42,9 @@
 | Nginx | 静态文件服务 | 已定 |
 | Docker / Docker Compose | 容器化 | 已定 |
 | Cloudflare Tunnel | 公网访问 | 已定 |
-| 起始模板 | 待 Phase 0 审查确定 | **待定** |
+| 起始模板 | `ricocc/ricoui-astro-starter` | 已定 |
 
-不引入：React/Vue 运行时（除非模板自带且不可移除）、CSS 框架、组件库、i18n 方案、状态管理。
+不引入：React/Vue 运行时（除非模板自带且不可移除）、CSS 框架（Tailwind 已获批准）、组件库、i18n 方案、状态管理。
 
 ---
 

@@ -17,6 +17,7 @@
 ### Changed
 
 - 需求文档 `README.md` 迁移至 `docs/requirements/website-plan-v1.2.md`，`README.md` 改为项目概览与文档索引。
+- 新增 `docs/decisions.md` 第 11 节修订记录：起始模板选定 `ricoui-astro-starter`（方案 B）；样式方案由 Sass / CSS Variables 修订为 Tailwind CSS v4 + CSS Variables（用户授权）。
 
 ### Notes
 
