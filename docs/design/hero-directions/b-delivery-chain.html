@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>方向 B · 交付链路</title>
+<style>
+:root {
+    --bg: #FCFBF8;
+    --bg-soft: #F3F1EA;
+    --ink: #0F1F1A;
+    --ink-2: #4A544F;
+    --ink-3: #8A928D;
+    --line: #E3DED2;
+    --accent: #17866A;
+    --radius: 4px;
+    --font-cn: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --font-en: "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-cn); -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+header { border-bottom: 1px solid var(--line); }
+.nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+.brand { display: flex; align-items: baseline; gap: 10px; }
+.brand strong { font-family: var(--font-en); font-size: 18px; font-weight: 600; letter-spacing: -.01em; }
+.brand span { font-size: 12px; color: var(--ink-3); letter-spacing: .06em; }
+.menu { display: flex; gap: 26px; font-size: 14px; color: var(--ink-2); }
+.menu a { text-decoration: none; color: inherit; }
+.menu a.on { color: var(--ink); font-weight: 600; }
+.nav-cta { font-size: 13px; padding: 9px 18px; border: 1px solid var(--ink); border-radius: var(--radius); text-decoration: none; color: var(--ink); }
+
+/* Hero：左文案 + 右链路 */
+.hero { display: grid; grid-template-columns: 1fr 460px; gap: 80px; padding-block: 84px 64px; align-items: start; }
+.eyebrow { font-family: var(--font-en); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; }
+h1 { font-size: 46px; line-height: 1.24; letter-spacing: -.02em; font-weight: 600; max-width: 560px; }
+.sub { margin-top: 24px; font-size: 16px; line-height: 1.9; color: var(--ink-2); max-width: 480px; }
+.tags { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 18px; list-style: none; }
+.tags li { font-family: var(--font-en); font-size: 11px; letter-spacing: .09em; color: var(--ink-3); }
+.cta { margin-top: 36px; display: flex; gap: 12px; }
+.btn { font-size: 14px; padding: 13px 24px; border-radius: var(--radius); text-decoration: none; border: 1px solid var(--ink); }
+.btn.primary { background: var(--ink); color: #fff; }
+.btn.ghost { color: var(--ink); }
+
+/* 链路 */
+.chain { border-left: 1px solid var(--line); padding-left: 32px; }
+.chain-title { font-family: var(--font-en); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 26px; }
+.node { position: relative; padding: 0 0 30px 0; }
+.node:last-child { padding-bottom: 0; }
+.node::before {
+    content: ""; position: absolute; left: -37px; top: 6px; width: 9px; height: 9px;
+    border-radius: 50%; background: var(--bg); border: 1px solid var(--ink-3);
+}
+.node.active::before { background: var(--accent); border-color: var(--accent); }
+.node .k { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+.node .k i { font-family: var(--font-en); font-size: 10px; font-style: normal; color: var(--ink-3); letter-spacing: .1em; }
+.node .d { font-size: 13px; line-height: 1.8; color: var(--ink-2); margin-top: 6px; max-width: 360px; }
+
+/* 深色块：能力声明 */
+.band { background: var(--ink); color: #fff; margin-top: 8px; }
+.band-in { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding: 44px 0; }
+.band h2 { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+.band p { font-size: 13px; line-height: 1.85; color: rgba(255,255,255,.62); }
+.band .num { font-family: var(--font-en); font-size: 11px; letter-spacing: .14em; color: rgba(255,255,255,.35); display: block; margin-bottom: 14px; }
+
+@media (max-width: 900px) {
+    .wrap { padding: 0 22px; }
+    .menu { display: none; }
+    .nav { height: 62px; }
+    .hero { grid-template-columns: 1fr; gap: 40px; padding-block: 52px 40px; }
+    h1 { font-size: 32px; }
+    .sub { font-size: 15px; }
+    .chain { border-left: none; border-top: 1px solid var(--line); padding: 32px 0 0 0; }
+    .node::before { left: -18px; }
+    .chain { padding-left: 18px; }
+    .band-in { grid-template-columns: 1fr; gap: 26px; padding: 32px 0; }
+}
+</style>
+</head>
+<body>
+<header>
+    <div class="wrap nav">
+        <div class="brand"><strong>EcomCanopy</strong><span>易贸森 · 跨境 AI</span></div>
+        <nav class="menu">
+            <a href="#" class="on">首页</a>
+            <a href="#">跨境 AI</a>
+            <a href="#">AI Agent</a>
+            <a href="#">技术服务</a>
+            <a href="#">项目</a>
+            <a href="#">文章</a>
+            <a href="#">关于</a>
+            <a href="#">联系</a>
+        </nav>
+        <a class="nav-cta" href="#">联系我</a>
+    </div>
+</header>
+
+<main class="wrap hero">
+    <div>
+        <p class="eyebrow">Cross-border Commerce × AI</p>
+        <h1>让 AI 真正<br />融入跨境电商业务。</h1>
+        <p class="sub">专注跨境电商与 AI 技术融合，围绕真实业务场景构建 AI 应用、Agent 自动化与业务系统解决方案。</p>
+        <ul class="tags">
+            <li>Cross-border Commerce</li>
+            <li>AI Engineering</li>
+            <li>Agent Automation</li>
+            <li>FDE Delivery</li>
+        </ul>
+        <div class="cta">
+            <a class="btn primary" href="#">探索技术服务</a>
+            <a class="btn ghost" href="#">查看项目实践</a>
+        </div>
+    </div>
+
+    <aside class="chain">
+        <p class="chain-title">Delivery Path</p>
+        <div class="node active">
+            <p class="k">业务问题 <i>01</i></p>
+            <p class="d">订单、库存、履约、Listing 与运营数据中，哪些环节真的在消耗人力。</p>
+        </div>
+        <div class="node">
+            <p class="k">AI 机会评估 <i>02</i></p>
+            <p class="d">判断这个环节适合用 Agent、Workflow 还是规则，而不是先选模型。</p>
+        </div>
+        <div class="node">
+            <p class="k">方案与 PoC <i>03</i></p>
+            <p class="d">先验证能不能跑通，再决定要不要进入工程开发。</p>
+        </div>
+        <div class="node">
+            <p class="k">集成与交付 <i>04</i></p>
+            <p class="d">接入现有 OMS / WMS / ERP，完成部署、监控与持续优化。</p>
+        </div>
+    </aside>
+</main>
+
+<section class="band">
+    <div class="wrap band-in">
+        <div>
+            <span class="num">01 / BUSINESS</span>
+            <h2>跨境业务理解</h2>
+            <p>多平台订单、多仓库库存、海外仓履约、物流渠道与运营数据。</p>
+        </div>
+        <div>
+            <span class="num">02 / AI</span>
+            <h2>AI 工程能力</h2>
+            <p>LLM 应用、Agent、Skills、MCP、RAG 与 Workflow 自动化。</p>
+        </div>
+        <div>
+            <span class="num">03 / SOFTWARE</span>
+            <h2>软件工程交付</h2>
+            <p>OMS / WMS / TMS 开发、平台集成、数据库优化与容器化部署。</p>
+        </div>
+    </div>
+</section>
+</body>
+</html>

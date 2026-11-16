@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>方向 A · 冠层</title>
+<style>
+/* 全局 Token（Phase 1 候选值，仅用于比稿） */
+:root {
+    --bg: #FCFBF8;
+    --bg-soft: #F3F1EA;
+    --ink: #0F1F1A;
+    --ink-2: #4A544F;
+    --ink-3: #8A928D;
+    --line: #E3DED2;
+    --accent: #17866A;
+    --radius: 4px;
+    --font-cn: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --font-en: "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-cn);
+    -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+/* Header */
+header { border-bottom: 1px solid var(--line); }
+.nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+.brand { display: flex; align-items: baseline; gap: 10px; }
+.brand strong { font-family: var(--font-en); font-size: 18px; font-weight: 600; letter-spacing: -.01em; }
+.brand span { font-size: 12px; color: var(--ink-3); letter-spacing: .06em; }
+.menu { display: flex; gap: 26px; font-size: 14px; color: var(--ink-2); }
+.menu a { text-decoration: none; color: inherit; }
+.menu a.on { color: var(--ink); font-weight: 600; }
+.nav-cta {
+    font-size: 13px; padding: 9px 18px; border: 1px solid var(--ink);
+    border-radius: var(--radius); text-decoration: none; color: var(--ink);
+}
+
+/* Hero */
+.hero { padding-block: 96px 88px; display: grid; grid-template-columns: 1.05fr .95fr; gap: 72px; align-items: start; }
+.eyebrow {
+    font-family: var(--font-en); font-size: 12px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 26px;
+}
+h1 { font-size: 54px; line-height: 1.22; letter-spacing: -.02em; font-weight: 600; }
+h1 em { font-style: normal; color: var(--accent); }
+.sub { margin-top: 26px; font-size: 16px; line-height: 1.9; color: var(--ink-2); max-width: 460px; }
+.tags { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 8px; }
+.tags li {
+    list-style: none; font-family: var(--font-en); font-size: 11px; letter-spacing: .08em;
+    color: var(--ink-2); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px;
+    background: #fff;
+}
+.cta { margin-top: 38px; display: flex; gap: 12px; }
+.btn {
+    font-size: 14px; padding: 13px 24px; border-radius: var(--radius);
+    text-decoration: none; border: 1px solid var(--ink);
+}
+.btn.primary { background: var(--ink); color: #fff; }
+.btn.ghost { color: var(--ink); }
+
+/* 右侧：树冠层叠 */
+.layers { display: flex; flex-direction: column; gap: 10px; padding-top: 8px; }
+.layer {
+    border-radius: var(--radius); padding: 18px 20px; display: flex;
+    align-items: baseline; justify-content: space-between; border: 1px solid var(--line);
+    background: #fff;
+}
+.layer .name { font-size: 14px; font-weight: 600; }
+.layer .en { font-family: var(--font-en); font-size: 11px; letter-spacing: .1em; color: var(--ink-3); }
+.layer.l1 { width: 100%; }
+.layer.l2 { width: 92%; background: var(--bg-soft); }
+.layer.l3 { width: 84%; background: var(--ink); border-color: var(--ink); }
+.layer.l3 .name { color: #fff; }
+.layer.l3 .en { color: rgba(255,255,255,.55); }
+.layer-note {
+    font-size: 12px; line-height: 1.8; color: var(--ink-3); margin-top: 14px;
+    max-width: 320px; padding-left: 2px;
+}
+
+/* 底部细条 */
+.strip { border-top: 1px solid var(--line); }
+.strip-in { display: flex; gap: 40px; padding: 22px 0; font-size: 13px; color: var(--ink-2); }
+.strip-in b { color: var(--ink); font-weight: 600; }
+
+@media (max-width: 900px) {
+    .wrap { padding: 0 22px; }
+    .menu { display: none; }
+    .nav { height: 62px; }
+    .hero { grid-template-columns: 1fr; gap: 40px; padding-block: 52px 48px; }
+    h1 { font-size: 34px; }
+    .sub { font-size: 15px; margin-top: 20px; }
+    .cta { margin-top: 28px; }
+    .strip-in { flex-direction: column; gap: 10px; }
+}
+</style>
+</head>
+<body>
+<header>
+    <div class="wrap nav">
+        <div class="brand"><strong>EcomCanopy</strong><span>易贸森 · 跨境 AI</span></div>
+        <nav class="menu">
+            <a href="#" class="on">首页</a>
+            <a href="#">跨境 AI</a>
+            <a href="#">AI Agent</a>
+            <a href="#">技术服务</a>
+            <a href="#">项目</a>
+            <a href="#">文章</a>
+            <a href="#">关于</a>
+            <a href="#">联系</a>
+        </nav>
+        <a class="nav-cta" href="#">联系我</a>
+    </div>
+</header>
+
+<main class="wrap hero">
+    <div>
+        <p class="eyebrow">Cross-border Commerce × AI</p>
+        <h1>让 AI 真正<br />融入<em>跨境电商</em>业务。</h1>
+        <p class="sub">专注跨境电商与 AI 技术融合，围绕真实业务场景构建 AI 应用、Agent 自动化与业务系统解决方案。</p>
+        <ul class="tags">
+            <li>Cross-border Commerce</li>
+            <li>AI Engineering</li>
+            <li>Agent Automation</li>
+            <li>FDE Delivery</li>
+        </ul>
+        <div class="cta">
+            <a class="btn primary" href="#">探索技术服务</a>
+            <a class="btn ghost" href="#">查看项目实践</a>
+        </div>
+    </div>
+
+    <aside class="layers">
+        <div class="layer l1"><span class="name">跨境业务</span><span class="en">CROSS-BORDER BUSINESS</span></div>
+        <div class="layer l2"><span class="name">AI 工程</span><span class="en">AI ENGINEERING</span></div>
+        <div class="layer l3"><span class="name">软件交付</span><span class="en">SOFTWARE DELIVERY</span></div>
+        <p class="layer-note">三层能力相互支撑：业务理解决定 AI 该做什么，工程交付决定它能不能真正跑起来。</p>
+    </aside>
+</main>
+
+<div class="strip">
+    <div class="wrap strip-in">
+        <span><b>方向</b>　跨境电商 AI 应用</span>
+        <span><b>方式</b>　Agent · Skills · MCP · Workflow</span>
+        <span><b>交付</b>　从业务分析到部署上线</span>
+    </div>
+</div>
+</body>
+</html>
