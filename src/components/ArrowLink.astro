@@ -1,0 +1,16 @@
+---
+import ArrowRight from "./icons/ArrowRight.astro";
+
+interface Props {
+    href: string;
+    label: string;
+    class?: string;
+}
+
+const { href, label, class: className = "" } = Astro.props;
+---
+
+<a class:list={["arrow-link", className]} href={href}>
+    <span>{label}</span>
+    <ArrowRight class="arrow-link__icon" />
+</a>

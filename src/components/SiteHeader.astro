@@ -1,0 +1,44 @@
+---
+import Logo from "./Logo.astro";
+import MenuIcon from "./icons/MenuIcon.astro";
+import { navItems } from "../data/content";
+
+interface Props {
+    active?: string;
+    menuVariant?: "default" | "cases" | "article";
+}
+
+const { active, menuVariant = "default" } = Astro.props;
+---
+
+<header class="site-header">
+    <div class="container site-header__inner">
+        <Logo />
+        <nav class="site-nav" aria-label="主导航">
+            {
+                navItems.map((item) => (
+                    <a
+                        class:list={["site-nav__link", { "is-accent": item.label === "案例与笔记" }]}
+                        href={item.href}
+                    >
+                        {item.label}
+                    </a>
+                ))
+            }
+        </nav>
+        <details class="mobile-nav">
+            <summary class="mobile-nav__toggle" aria-label="打开导航">
+                <MenuIcon variant={menuVariant} />
+            </summary>
+            <nav class="mobile-nav__panel" aria-label="移动端导航">
+                {
+                    navItems.map((item) => (
+                        <a class="mobile-nav__link" href={item.href}>
+                            {item.label}
+                        </a>
+                    ))
+                }
+            </nav>
+        </details>
+    </div>
+</header>

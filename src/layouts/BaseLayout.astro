@@ -1,0 +1,48 @@
+---
+import Masthead from "../components/Masthead.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import "../styles/global.css";
+
+interface Props {
+    title: string;
+    description: string;
+    activeNav?: string;
+    footerVariant?: "home" | "cases" | "article";
+}
+
+const { title, description, activeNav, footerVariant = "home" } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const menuVariant = footerVariant === "article" ? "article" : footerVariant === "cases" ? "cases" : "default";
+---
+
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#FAF9F5" />
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:site_name" content="EcomCanopy" />
+        <title>{title}</title>
+        <link rel="preconnect" href="https://fonts.loli.net" />
+        <link rel="preconnect" href="https://gstatic.loli.net" crossorigin />
+        <link
+            href="https://fonts.loli.net/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@400&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body class:list={[`page-${footerVariant}`]}>
+        <Masthead />
+        <SiteHeader active={activeNav} menuVariant={menuVariant} />
+        <main>
+            <slot />
+        </main>
+        <SiteFooter variant={footerVariant} />
+    </body>
+</html>

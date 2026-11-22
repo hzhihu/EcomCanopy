@@ -1,0 +1,277 @@
+---
+import ArrowLeft from "../../components/icons/ArrowLeft.astro";
+import ArrowRight from "../../components/icons/ArrowRight.astro";
+import LinkIcon from "../../components/icons/LinkIcon.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { article, siteMeta } from "../../data/content";
+
+export function getStaticPaths() {
+    return [
+        {
+            params: { slug: article.slug },
+            props: { article },
+        },
+    ];
+}
+
+const { article: pageArticle } = Astro.props;
+const [caseCode, caseCategory] = pageArticle.eyebrow.split("/").map((part) => part.trim());
+const authorName = pageArticle.author.replace("文 / ", "");
+const currentCase = `${caseCode} · ${caseCategory}`;
+---
+
+<BaseLayout
+    title={`${pageArticle.title.replace("\n", " ")}｜EcomCanopy`}
+    description={pageArticle.intro}
+    activeNav="案例与笔记"
+    footerVariant="article"
+>
+    <section class="container">
+        <div class="breadcrumb">
+            <div class="breadcrumb__trail">
+                <span><a href="/">首页</a> / <a href="/cases">案例与笔记</a> /</span>
+                <span class="breadcrumb__current">{currentCase}</span>
+            </div>
+            <a class="breadcrumb__back" href="/cases">
+                <ArrowLeft />
+                返回案例与笔记
+            </a>
+            <span class="breadcrumb__case">{caseCode}</span>
+        </div>
+    </section>
+
+    <section class="container">
+        <header class="article-header">
+            <div class="article-header__meta">
+                <span class="article-header__meta-accent">{pageArticle.eyebrow}</span>
+                <span>{pageArticle.fieldNote}</span>
+            </div>
+            <h1 class="article-header__title" set:html={pageArticle.title.replace("\n", "<br />")} />
+            <p class="article-header__subtitle">{pageArticle.subtitle}</p>
+            <div class="article-header__rule"></div>
+            <p class="article-header__intro">
+                <span class="article-header__intro-desktop">{pageArticle.intro}</span>
+                <span class="article-header__intro-mobile">{pageArticle.introMobile}</span>
+            </p>
+            <div class="article-header__byline">
+                <span class="article-header__author">{pageArticle.author}</span>
+                <span class="article-header__date">{pageArticle.date}</span>
+                <span class="article-header__read-time">{pageArticle.readTime}</span>
+                <span class="article-header__category">{pageArticle.category}</span>
+            </div>
+        </header>
+
+        <figure class="article-cover">
+            <picture class="article-cover__picture">
+                <source media="(max-width: 640px)" srcset={pageArticle.coverMobile} />
+                <img
+                    class="article-cover__image"
+                    src={pageArticle.cover}
+                    alt={pageArticle.coverAlt}
+                    loading="eager"
+                />
+            </picture>
+            <figcaption class="article-caption">{pageArticle.coverCaption}</figcaption>
+        </figure>
+    </section>
+
+    <div class="article-layout container">
+        <article class="article-body">
+            <p class="article-lead">{pageArticle.lead}</p>
+
+            {
+                pageArticle.sections.map((section) => (
+                    <section class="article-section" id={section.id}>
+                        <div class="article-section__number">{section.number}</div>
+                        <h2 class="article-section__title">{section.title}</h2>
+                        {section.paragraphs.map((paragraph) => (
+                            <p>{paragraph}</p>
+                        ))}
+                        {section.quote ? (
+                            <blockquote class="article-quote">
+                                <p class="article-quote__text">{section.quote.text}</p>
+                                <div class="article-quote__source">{section.quote.source}</div>
+                            </blockquote>
+                        ) : null}
+                        {section.list ? (
+                            <div class="article-list">
+                                {section.list.map((item, index) => (
+                                    <div class="article-list__item">
+                                        <div class="article-list__number">
+                                            {String(index + 1).padStart(2, "0")}
+                                        </div>
+                                        <div class="article-list__text">{item}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : null}
+                        {section.image ? (
+                            <figure class="article-inline-figure">
+                                <picture class="article-inline-picture">
+                                    {section.imageMobile ? (
+                                        <source media="(max-width: 640px)" srcset={section.imageMobile} />
+                                    ) : null}
+                                    <img
+                                        class="article-inline-image"
+                                        src={section.image}
+                                        alt={section.imageAlt}
+                                        loading="lazy"
+                                    />
+                                </picture>
+                                <figcaption class="article-caption">{section.imageCaption}</figcaption>
+                            </figure>
+                        ) : null}
+                        {section.closing ? (
+                            <p class="article-closing">{section.closing}</p>
+                        ) : null}
+                    </section>
+                ))
+            }
+            <div class="article-body__meta">
+                hzhihu / {pageArticle.date} / 易贸森
+            </div>
+        </article>
+
+        <aside class="article-aside">
+            <div class="article-toc">
+                <div class="article-toc__label">本文目录 / CONTENTS</div>
+                {
+                    pageArticle.sections.map((section, index) => (
+                        <a class="article-toc__link" href={`#${section.id}`}>
+                            {String(index + 1).padStart(2, "0")}　{section.title}
+                        </a>
+                    ))
+                }
+            </div>
+
+            <div class="article-sidebar">
+                <div class="article-sidebar__section">
+                    <div class="article-sidebar__label">文章信息 / ABOUT</div>
+                    <div class="article-sidebar__info">
+                        <div class="article-sidebar__info-row">
+                            <span>栏目</span>
+                            <span>{pageArticle.category}</span>
+                        </div>
+                        <div class="article-sidebar__info-row">
+                            <span>发布</span>
+                            <span>{pageArticle.date}</span>
+                        </div>
+                        <div class="article-sidebar__info-row">
+                            <span>阅读</span>
+                            <span>8 分钟</span>
+                        </div>
+                        <div class="article-sidebar__info-row">
+                            <span>署名</span>
+                            <span>{authorName}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-sidebar__section">
+                    <div class="article-sidebar__label">标签 / TAGS</div>
+                    <div class="article-tags">
+                        {pageArticle.tags.map((tag) => <span class="article-tag">{tag}</span>)}
+                    </div>
+                </div>
+                <button class="article-share" type="button" data-copy-link>
+                    <LinkIcon />
+                    <span>复制文章链接</span>
+                </button>
+            </div>
+        </aside>
+    </div>
+
+    <section class="results-section">
+        <div class="container">
+            <div class="results-section__meta">
+                <span>04 / 结果</span>
+                <span>WHAT CHANGED IN 90 DAYS</span>
+            </div>
+            <h2 class="results-section__title">
+                系统跑起来之后，<br class="results-section__title-break" />现场发生了什么
+            </h2>
+            <div class="results-grid">
+                {
+                    pageArticle.results.map((item) => (
+                        <div class="result-card">
+                            <div class="result-card__value">{item.value}</div>
+                            <div class="result-card__title">{item.title}</div>
+                            <div class="result-card__note">{item.note}</div>
+                        </div>
+                    ))
+                }
+            </div>
+            <div class="results-section__note">{pageArticle.resultNote}</div>
+        </div>
+    </section>
+
+    <section class="article-tail container">
+        <div class="article-tail__rule"></div>
+        <div class="article-tail__nav">
+            <div class="article-tail__item">
+                <div class="article-tail__label">PREVIOUS / 上一篇</div>
+                <h3 class="article-tail__title">{pageArticle.previous}</h3>
+            </div>
+            <div class="article-tail__item article-tail__item--next">
+                <div class="article-tail__label">NEXT / 下一篇</div>
+                <h3 class="article-tail__title">{pageArticle.next}</h3>
+            </div>
+        </div>
+        <div class="article-tail__back-row">
+            <a class="button button--dark article-tail__back" href="/cases">
+                返回案例与笔记，看全部文章
+            </a>
+        </div>
+    </section>
+
+    <section class="related-section container">
+        <div class="related-section__header">
+            <div class="related-section__heading">
+                <span class="related-section__kicker">05 / 继续阅读</span>
+                <h2 class="related-section__title">接着往下读</h2>
+            </div>
+            <a class="related-section__more" href="/cases">
+                <span>查看全部 52 篇<span class="related-section__more-suffix">笔记</span></span>
+                <ArrowRight />
+            </a>
+        </div>
+        <div class="related-grid">
+            {
+                pageArticle.related.map((item) => (
+                    <article class="related-card">
+                        <picture class="related-card__picture">
+                            {item.imageMobile ? (
+                                <source media="(max-width: 640px)" srcset={item.imageMobile} />
+                            ) : null}
+                            <img
+                                class="related-card__image"
+                                src={item.image}
+                                alt={item.imageAlt}
+                                loading="lazy"
+                            />
+                        </picture>
+                        <div class="related-card__category">{item.category}</div>
+                        <h3 class="related-card__title">{item.title}</h3>
+                        <div class="related-card__meta">{item.meta}</div>
+                    </article>
+                ))
+            }
+        </div>
+    </section>
+
+    <script>
+        const copyButtons = document.querySelectorAll<HTMLButtonElement>("[data-copy-link]");
+
+        copyButtons.forEach((button) => {
+            button.addEventListener("click", async () => {
+                const label = button.querySelector("span");
+
+                try {
+                    await navigator.clipboard.writeText(window.location.href);
+                    if (label) label.textContent = "已复制链接";
+                } catch {
+                    if (label) label.textContent = "复制失败";
+                }
+            });
+        });
+    </script>
+</BaseLayout>

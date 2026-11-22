@@ -1,0 +1,23 @@
+---
+import { masthead } from "../data/content";
+
+interface Props {
+    left?: string;
+    right?: string;
+}
+
+const { left = masthead.left, right = masthead.right } = Astro.props;
+---
+
+<div class="masthead">
+    <div class="container masthead__inner">
+        <span class="masthead__left">
+            <span class="masthead__left-full">{left}</span>
+            <span class="masthead__left-short">FIELD NOTES NO. 01</span>
+        </span>
+        <span class="masthead__right">
+            <span class="masthead__right-full">{right}</span>
+            <span class="masthead__right-short">CROSS-BORDER X AI</span>
+        </span>
+    </div>
+</div>

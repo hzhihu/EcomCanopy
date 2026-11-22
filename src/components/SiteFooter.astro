@@ -1,0 +1,43 @@
+---
+import { navItems, siteMeta } from "../data/content";
+import TreeLine from "./icons/TreeLine.astro";
+import TreeMark from "./icons/TreeMark.astro";
+import TreePine from "./icons/TreePine.astro";
+
+interface Props {
+    variant?: "home" | "cases" | "article";
+}
+
+const { variant = "home" } = Astro.props;
+---
+
+<footer class:list={["site-footer", `site-footer--${variant}`]}>
+    <div class="container site-footer__inner">
+        <div class="site-footer__main">
+            <div class="site-footer__brand">
+                <div class="site-footer__wordmark">EcomCanopy</div>
+                <p class="site-footer__tagline">{siteMeta.tagline}</p>
+            </div>
+            <nav class="site-footer__nav" aria-label="页脚导航">
+                <div class="site-footer__nav-label">目录 / INDEX</div>
+                {
+                    navItems.map((item) => (
+                        <a class="site-footer__nav-link" href={item.href}>
+                            {item.label}
+                        </a>
+                    ))
+                }
+            </nav>
+            <div class="site-footer__trees" aria-hidden="true">
+                <TreeMark class="site-footer__tree site-footer__tree--mark" />
+                <TreeLine class="site-footer__tree site-footer__tree--line" />
+                <TreePine class="site-footer__tree site-footer__tree--pine" />
+            </div>
+        </div>
+        <div class="site-footer__rule"></div>
+        <div class="site-footer__bottom">
+            <span>ECOMCANOPY / FIELD NOTES NO. 01</span>
+            <span>CROSS-BORDER COMMERCE X AI</span>
+        </div>
+    </div>
+</footer>

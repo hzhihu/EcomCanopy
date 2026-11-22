@@ -12,7 +12,8 @@
 1. 读 `docs/decisions.md`。
 2. 读 `CONTEXT.md`，确认当前阶段与待确认项。
 3. 读 `docs/requirements/website-plan-v1.2.md` 中与本次任务相关的章节。
-4. 确认本阶段在 README「实施阶段」中的边界（允许改什么、禁止改什么）。
+4. 涉及视觉或文案时，读 `docs/design/ardot-shots/README.md` 与 `docs/decisions.md` 的 2026-11-22 方向变更。
+5. 确认 README「当前状态」与 `CONTEXT.md`「下一步」中的阶段边界（允许改什么、禁止改什么）。
 
 未完成上述阅读就动手，视为违规。
 
@@ -80,7 +81,7 @@
 - 函数名以动词开头（`getProjectBySlug`）。
 - 注释使用中文，解释「为什么」，不解释「是什么」。
 - TypeScript 严格模式，不用 `any` 绕过类型。
-- 样式使用 CSS Variables / Sass 变量，不写魔法数字。
+- 样式使用 CSS Variables，不写魔法数字。
 - 单文件单一职责，组件超过约 200 行时考虑拆分。
 
 ---
@@ -88,7 +89,8 @@
 ## 7. 内容规范
 
 - 网站语言：简体中文；英文仅用于品牌元素与专有名词。
-- 项目内容必须标注 `projectType` 与 `projectStatus`，状态按实际进度填写，宁低不高。
+- 当前 3 个页面以 Ardot 文案为准；以下规则适用于后续新增项目页与文章内容。
+- 后续项目内容必须标注 `projectType` 与 `projectStatus`，状态按实际进度填写，宁低不高。
 - 商业项目一律以「工程实践」呈现，去除客户名、系统名、可定位数据。
 - 性能类案例必须以「自建测试库复现的实验」呈现。
 - 内容初稿由 AI 起草，技术事实必须来自用户提供的素材，不得凭空补全。
@@ -99,7 +101,7 @@
 
 ```bash
 pnpm build          # 构建通过
-pnpm astro check    # 类型检查通过
+pnpm check          # 当前受 TypeScript 7 阻塞；失败时必须记录，不得写成通过
 ```
 
 人工确认：

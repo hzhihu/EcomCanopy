@@ -1,0 +1,235 @@
+---
+import ArrowLink from "../components/ArrowLink.astro";
+import ArrowRight from "../components/icons/ArrowRight.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+    capabilities,
+    deliverables,
+    engagementOptions,
+    faqs,
+    scopeItems,
+    siteMeta,
+    trustPoints,
+} from "../data/content";
+---
+
+<BaseLayout
+    title="EcomCanopy 易贸森｜跨境电商 × AI 一人技术工作室"
+    description="EcomCanopy（易贸森）以 FDE 的方式，为跨境电商团队端到端交付 AI Agent 与业务系统。"
+    activeNav="能力"
+>
+    <section class="hero container">
+        <div class="hero__meta">
+            <span>01 / 首页 — 一人技术工作室</span>
+            <span class="hero__meta-code">
+                <span class="hero__meta-code-full">CROSS-BORDER COMMERCE X AI</span>
+                <span class="hero__meta-code-short">CROSS-BORDER</span>
+            </span>
+        </div>
+        <div class="hero__rule"></div>
+        <div class="hero__main">
+            <div class="hero__copy">
+                <div class="hero__eyebrow">独立技术工作室 / INDEPENDENT TECH STUDIO</div>
+                <h1 class="hero__title">
+                    从订单到海外仓，<br />
+                    把 AI 交付到现场。
+                </h1>
+                <p class="hero__description">
+                    EcomCanopy（易贸森）是一人技术工作室。以 FDE（Forward Deployed Engineer）的方式，为跨境电商团队端到端交付
+                    AI Agent 与业务系统：从 Listing、订单、库存到海外仓与物流，代码直接写进真实流程里。
+                </p>
+                <div class="hero__actions">
+                    <a class="button" href="/cases">
+                        阅读案例与笔记
+                        <ArrowRight class="hero__button-arrow" />
+                    </a>
+                </div>
+            </div>
+            <aside class="hero__scope">
+                <span class="hero__scope-label">服务范围 / SCOPE</span>
+                <ul class="hero__scope-list">
+                    {scopeItems.map((item) => <li>{item}</li>)}
+                </ul>
+            </aside>
+        </div>
+        <div class="hero__footer">
+            <span>向下继续 / 共 04 个章节</span>
+            <span>FIG. 01 / DEPLOYMENT SITE</span>
+        </div>
+    </section>
+
+    <div class="ticker">
+        <div class="container ticker__inner">
+            ORDERS / INVENTORY / WMS / LISTING / LOGISTICS / AI AGENT<br class="ticker__break" /> / FORWARD
+            DEPLOYED ENGINEER
+        </div>
+    </div>
+
+    <section class="section" id="capability">
+        <div class="container section__stack">
+            <div class="section-grid">
+                <SectionHeading number="02 / CAPABILITY" cn="能力" en="CAPABILITY" />
+                <div class="section__intro">
+                    <h2 class="section__title">
+                        不是交一套工具，<br />
+                        是把系统接进流程里。
+                    </h2>
+                    <p class="section__description">
+                        FDE 的核心不是演示，是驻场：先读懂订单怎么流、库存怎么对、海外仓怎么回传，再决定 Agent
+                        放在哪一步、系统落到哪里。
+                    </p>
+                </div>
+            </div>
+            <div class="capabilities">
+                {
+                    capabilities.map((item, index) => (
+                        <article
+                            class:list={["capability", { "capability--reverse": index === 1 }]}
+                        >
+                            <div class="capability__index" aria-hidden="true">{item.number}</div>
+                            <div class="capability__text">
+                                <div class="capability__label">
+                                    <span class="capability__inline-number">{item.number}</span>
+                                    {item.label}
+                                </div>
+                                <h3 class="capability__title">{item.title}</h3>
+                                <p class="capability__description">{item.description}</p>
+                            </div>
+                            <div class="capability__media">
+                                <picture class="capability__picture">
+                                    <source media="(max-width: 640px)" srcset={item.imageMobile} />
+                                    <img
+                                        class="capability__image"
+                                        src={item.image}
+                                        alt={item.imageAlt}
+                                        loading="lazy"
+                                    />
+                                </picture>
+                                <div class="capability__caption">{item.caption}</div>
+                            </div>
+                        </article>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+    <section class="section section--dark" id="deliverables">
+        <div class="container section__stack">
+            <div class="section-grid">
+                <SectionHeading number="03 / DELIVERABLES" cn="交付物" en="DELIVERABLES" tone="dark" />
+                <div class="section__intro">
+                    <h2 class="section__title">
+                        交付的是能跑的东西，<br />
+                        不是一份方案。
+                    </h2>
+                    <p class="section__description">
+                        每个项目都会留下可运行、可交接、可继续改的资产。下面是通常会一起交付的四类东西。
+                    </p>
+                </div>
+            </div>
+            <div class="deliverables">
+                {
+                    deliverables.map((item) => (
+                        <div class="deliverable">
+                            <h3 class="deliverable__name">{item.name}</h3>
+                            <p class="deliverable__description">{item.description}</p>
+                        </div>
+                    ))
+                }
+            </div>
+            <div class="deliverable-media">
+                <picture class="deliverable-picture">
+                    <source media="(max-width: 640px)" srcset="/images/home-warehouse-mobile.png" />
+                    <img
+                        class="deliverable-image"
+                        src="/images/home-warehouse-wide.jpg"
+                        alt="仓库货架与作业通道"
+                        loading="lazy"
+                    />
+                </picture>
+                <div class="deliverable-caption">
+                    FIG. 02 / 海外仓作业现场 — 图片为示意，实际项目以现场为准
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="engagement">
+        <div class="container section__stack">
+            <div class="section-grid">
+                <SectionHeading number="04 / TRUST & ENGAGEMENT" cn="信任与合作" en="TRUST & ENGAGEMENT" />
+                <div class="section__intro">
+                    <h2 class="section__title">
+                        先看我怎么写，<br />
+                        再决定要不要一起做。
+                    </h2>
+                    <p class="section__description">
+                        这里没有客户 Logo 墙，也没有夸张的数字。一人工作室的可信度，来自能被核对的细节与清楚的边界。
+                    </p>
+                </div>
+            </div>
+
+            <div class="trust-points">
+                {
+                    trustPoints.map((item) => (
+                        <p class="trust-point">
+                            <span class="trust-point__label">{item.title}</span>
+                            <span class="trust-point__text">{item.description}</span>
+                        </p>
+                    ))
+                }
+            </div>
+
+            <div>
+                <div class="list-label">合作方式 / ENGAGEMENT</div>
+                <div class="engagement-list">
+                    {
+                        engagementOptions.map((item) => (
+                            <div class="engagement-row">
+                                <h3 class="engagement-row__name">{item.name}</h3>
+                                <p class="engagement-row__description">{item.description}</p>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <div>
+                <div class="list-label">常见问题 / FAQ</div>
+                <div class="faq-list">
+                    {
+                        faqs.map((item) => (
+                            <div class="faq-row">
+                                <h3 class="faq-row__question">{item.question}</h3>
+                                <p class="faq-row__answer">{item.answer}</p>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <div class="section-rule" aria-hidden="true"></div>
+
+            <div class="cta-panel">
+                <div class="cta-panel__eyebrow">先读，再决定 / READ FIRST</div>
+                <h2 class="cta-panel__title">
+                    案例与工程笔记，<br class="cta-panel__title-break" />比介绍页更有用。
+                </h2>
+                <p class="cta-panel__description">
+                    里面写的是真实链路怎么拆、Agent 放在哪一步、哪些坑要提前避开。
+                </p>
+                <div class="cta-panel__footer">
+                    <a class="button button--small" href="/cases">
+                        阅读案例与笔记
+                        <ArrowRight />
+                    </a>
+                    <a class="cta-panel__email" href={`mailto:${siteMeta.email}`}>
+                        也可以直接来信聊你的业务：<span class="cta-panel__address">hzhihu</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</BaseLayout>

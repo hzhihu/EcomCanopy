@@ -1,0 +1,44 @@
+---
+import type { CaseStudy } from "../data/content";
+import ArrowLink from "./ArrowLink.astro";
+
+interface Props {
+    item: CaseStudy;
+    featured?: boolean;
+}
+
+const { item, featured = false } = Astro.props;
+---
+
+<article class:list={["case-card", { "case-card--featured": featured }]}>
+    <a
+        class="case-card__image-wrap"
+        href={item.slug ? `/cases/${item.slug}` : "/cases"}
+        aria-label={item.title}
+    >
+        <picture class="case-card__picture">
+            {item.imageMobile ? <source media="(max-width: 640px)" srcset={item.imageMobile} /> : null}
+            <img class="case-card__image" src={item.image} alt={item.imageAlt} loading="lazy" />
+        </picture>
+    </a>
+    <div class="case-card__body">
+        <div class="case-card__code">{item.code}</div>
+        <h3 class="case-card__title">{item.title}</h3>
+        <p class="case-card__summary">{item.summary}</p>
+        {
+            featured && item.tags ? (
+                <div class="case-card__tags">
+                    {item.tags.map((tag) => <span>{tag}</span>)}
+                </div>
+            ) : null
+        }
+        <div class="case-card__footer">
+            <span class="case-card__meta">{item.meta}</span>
+            {
+                featured && item.slug ? (
+                    <ArrowLink href={`/cases/${item.slug}`} label="阅读全文" />
+                ) : null
+            }
+        </div>
+    </div>
+</article>

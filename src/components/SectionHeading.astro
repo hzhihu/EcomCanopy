@@ -1,0 +1,19 @@
+---
+interface Props {
+    number: string;
+    cn: string;
+    en: string;
+    tone?: "light" | "dark";
+}
+
+const { number, cn, en, tone = "light" } = Astro.props;
+---
+
+<div class:list={["section-heading", { "is-dark": tone === "dark" }]}>
+    <div class="section-heading__number">{number}</div>
+    <div class="section-heading__title">
+        <span class="section-heading__cn">{cn}</span>
+        <span class="section-heading__en">{en}</span>
+    </div>
+    <span class="section-heading__rule" aria-hidden="true"></span>
+</div>

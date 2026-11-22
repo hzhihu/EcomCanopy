@@ -1,0 +1,124 @@
+---
+import ArrowLink from "../components/ArrowLink.astro";
+import CaseCard from "../components/CaseCard.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+    caseStats,
+    caseStudies,
+    featuredCase,
+    notes,
+    siteMeta,
+} from "../data/content";
+---
+
+<BaseLayout
+    title="案例与笔记｜EcomCanopy 易贸森"
+    description="跨境履约、数据治理、库存同步与异常预测的工程记录，以及现场笔记与方法随想。"
+    activeNav="案例与笔记"
+    footerVariant="cases"
+>
+    <section class="page-header container">
+        <div class="page-header__meta">
+            <span>05 / 案例与笔记</span>
+            <span>CASE STUDIES & FIELD NOTES / 2023—2026</span>
+        </div>
+        <div class="page-header__rule"></div>
+        <div class="page-header__body">
+            <div>
+                <h1 class="page-header__title">案例与笔记</h1>
+                <div class="page-header__subtitle">Cases, notes & things learned on site.</div>
+            </div>
+            <p class="page-header__intro">
+                把交付过的系统、踩过的坑、想清楚的问题，一条条写下来。不写趋势，只记录现场。
+            </p>
+        </div>
+    </section>
+
+    <section class="cases-overview container">
+        <div class="stats-grid">
+            {
+                caseStats.map((item) => (
+                    <div class="stat">
+                        <div class="stat__value">{item.value}</div>
+                        <div class="stat__label">{item.label}</div>
+                    </div>
+                ))
+            }
+        </div>
+        <div class="filter-row">
+            <span class="filter is-active">全部 92</span>
+            <span class="filter">案例研究 24</span>
+            <span class="filter">现场笔记 52</span>
+            <span class="filter">方法随想 16</span>
+            <span class="filter-spacer"></span>
+            <span class="filter-sort">SORTED BY / NEWEST FIRST</span>
+        </div>
+    </section>
+
+    <section class="container featured-case">
+        <div class="featured-case__header">
+            <span>01 / 精选案例</span>
+            <span>FEATURED CASE STUDY</span>
+        </div>
+        <CaseCard item={featuredCase} featured />
+    </section>
+
+    <section class="case-grid-section container">
+        <div class="case-grid__header">
+            <span>02 / 案例研究</span>
+            <span>查看全部 / VIEW ALL 24</span>
+        </div>
+        <div class="case-grid">
+            {
+                caseStudies.map((item) => (
+                    <CaseCard item={item} />
+                ))
+            }
+        </div>
+    </section>
+
+    <section class="notes-section">
+        <div class="container">
+            <div class="notes-section__header">
+                <div>
+                    <div class="notes-section__kicker">03 / 现场笔记</div>
+                    <h2 class="notes-section__title">先写下来，再慢慢想清楚。</h2>
+                </div>
+                <div class="notes-section__note">
+                    <span class="notes-section__note-primary">FIELD NOTES / 52 ENTRIES</span><br />
+                    <span class="notes-section__note-secondary">不写趋势，只记录现场</span>
+                </div>
+            </div>
+            <div class="note-list">
+                {
+                    notes.map((item) => (
+                        <div class="note-row">
+                            <div class="note-row__number">{item.number}</div>
+                            <h3 class="note-row__title">{item.title}</h3>
+                            <div class="note-row__meta">
+                                <span class="note-row__category">{item.category}</span>
+                                <span class="note-row__date">{item.date}</span>
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+            <div class="notes-section__more">
+                <ArrowLink href="/cases" label="查看全部 52 篇笔记" />
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-band">
+        <div class="container contact-band__inner">
+            <div class="contact-band__copy">
+                <div class="contact-band__eyebrow">FIELD NOTES / 联系我</div>
+                <h2 class="contact-band__title">有想聊的项目，直接来信就好。</h2>
+                <p class="contact-band__description">
+                    合作、交流，或只是想问问某篇笔记背后的取舍，都欢迎。不群发，不推销。
+                </p>
+            </div>
+            <a class="button button--dark" href={`mailto:${siteMeta.email}`}>联系我</a>
+        </div>
+    </section>
+</BaseLayout>
