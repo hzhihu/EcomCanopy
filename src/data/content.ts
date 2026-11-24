@@ -27,7 +27,7 @@ export const navItems: NavItem[] = [
     { label: "能力", href: "/#capability" },
     { label: "交付物", href: "/#deliverables" },
     { label: "合作方式", href: "/#engagement" },
-    { label: "案例与笔记", href: "/cases" },
+    { label: "案例与笔记", href: "/cases/" },
 ];
 
 export const masthead = {

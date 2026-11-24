@@ -13,7 +13,7 @@ const { item, featured = false } = Astro.props;
 <article class:list={["case-card", { "case-card--featured": featured }]}>
     <a
         class="case-card__image-wrap"
-        href={item.slug ? `/cases/${item.slug}` : "/cases"}
+        href={item.slug ? `/cases/${item.slug}/` : "/cases/"}
         aria-label={item.title}
     >
         <picture class="case-card__picture">
@@ -36,7 +36,7 @@ const { item, featured = false } = Astro.props;
             <span class="case-card__meta">{item.meta}</span>
             {
                 featured && item.slug ? (
-                    <ArrowLink href={`/cases/${item.slug}`} label="阅读全文" />
+                    <ArrowLink href={`/cases/${item.slug}/`} label="阅读全文" />
                 ) : null
             }
         </div>

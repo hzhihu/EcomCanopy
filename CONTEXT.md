@@ -29,11 +29,11 @@
 | 部署方案 | 现有 Caddy 容器 + `/var/www/ecomcanopy.site/current` 静态目录发布；`deploy` 对 `/var/www` 有操作权限，后续可管理其它站点，见 `docs/deployment/vps-grey-cloud-plan.md` |
 | VPS | `104.233.188.111`，境外，Ubuntu 24.04.5 LTS，x86_64；Docker 29.9.3 与 Compose v5.7.1 已安装，本站不再使用其运行时 |
 | 仓库与范围 | GitHub 仓库公开；当前 3 个页面确认为本次 V1.0 上线范围 |
-| Caddy 现状 | 容器 `caddy`（`67021f66c770`），镜像 `caddy:2.11.2-geoip`；命令 `caddy run --config /etc/caddy/Caddyfile --adapter caddyfile`；`https://ecomcanopy.site/` 返回 200，TLS 正常；首页是 `Demo Site` 占位页 |
+| Caddy 现状 | 容器 `caddy`（`67021f66c770`），镜像 `caddy:2.11.2-geoip`；命令 `caddy run --config /etc/caddy/Caddyfile --adapter caddyfile`；`https://ecomcanopy.site/` 返回 200，TLS 正常；首页已是真实内容（2026-11-24 线上复测） |
 | Caddy 挂载 | 宿主机 `/var/www` -> 容器 `/var/www`（只读）；`/opt/docker-compose/caddy/Caddyfile` -> `/etc/caddy/Caddyfile`（只读）；`2019/tcp` 仅容器内 |
 | 发布自动化 | `scripts/release.sh` 与 `.github/workflows/deploy.yml` 已创建；本地 `pnpm build` 通过 |
 | VPS 准备（用户确认） | `deploy` 用户已创建；Caddy 配置与 GitHub Actions Secrets 已配置 |
-| 当前缺口 | `/cases/`、`/cases/fulfillment-ai/`、`/images/...` 为 404；`www` 不可用 |
+| 当前缺口 | SEO 基础能力已在代码侧补齐（`robots.txt`、`sitemap.xml`、JSON-LD、OG 图、favicon、404 页），**尚未发布到线上**；方案见 `docs/seo/geo-seo-plan-v1.0.md`（v1.1） |
 
 ---
 
@@ -41,11 +41,11 @@
 
 - 类型检查：`pnpm check` 因 TypeScript 7 与 `astro check` 不兼容而失败
 - 未来页面素材（头像等，当前 3 页范围外）
-- Caddy `root`、`/var/www/ecomcanopy.site` 目录与权限尚未在首次发布中验证
+- Caddy `root` 已能正常服务 3 个页面（2026-11-24 复测）；`/var/www/ecomcanopy.site` 的 `current`/`tmp`/`releases` 结构与 `deploy` 写权限尚未逐项核对
 - 上传暂存与备份目录尚未在首次发布中实际创建
 - `/var/www` 下是否已有其它站点需要交给 `deploy` 管理，尚未逐个确认
-- GitHub Actions 尚未实际运行；首次发布未执行
-- 3 个页面、图片与 `www` 尚未上线验证
+- 首次发布已完成（2026-11-24 复测 3 页、图片、`www` 均可访问）；本次发布是否由 GitHub Actions 触发尚未核实
+- 3 个页面、`/images/` 与 `www`（301 → apex）已于 2026-11-24 线上复测确认可用，见 `docs/seo/geo-seo-plan-v1.0.md` §2.5
 
 ---
 
@@ -58,8 +58,8 @@
 | 3 | 「易贸森」重名与商标查询 | 对外宣传口径 | 不阻塞（不宣称商标） |
 | 4 | 后续案例与文章原料 | 未来内容扩展 | 不阻塞当前 3 页 |
 | 5 | Cloudflare Email Routing 是否已配置 | 上线后的邮件联系 | 阻塞上线 |
-| 6 | 是否现在执行首次生产发布 | 3 个页面上线 | 阻塞上线 |
-| 7 | `www.ecomcanopy.site` 是否现在补 DNS | `www` 可用性 | 阻塞 `www` |
+| 6 | ~~是否现在执行首次生产发布~~ 已完成：3 个页面已上线（2026-11-24 实测） | 3 个页面上线 | 已确认 |
+| 7 | ~~`www.ecomcanopy.site` 是否现在补 DNS~~ 已解决：`www` 301 → apex（2026-11-24 实测） | `www` 可用性 | 已确认 |
 | 8 | 首次发布使用手动 `workflow_dispatch` 还是 `v1.0.0` tag | 发布追溯 | 不阻塞 |
 
 ---

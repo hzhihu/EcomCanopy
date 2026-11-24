@@ -1,0 +1,21 @@
+# 未列出的爬虫沿用 robots 默认规则：允许
+# 下列条目是显式白名单，便于日后收紧时不被误伤
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Bytespider
+Allow: /
+
+# 不放行 Google-Extended：不授权内容用于 Gemini/Vertex AI 训练
+# robots.txt 默认允许，必须显式 Disallow 才是「不放行」
+User-agent: Google-Extended
+Disallow: /
+
+Sitemap: https://ecomcanopy.site/sitemap.xml

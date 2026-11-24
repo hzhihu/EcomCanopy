@@ -1,0 +1,67 @@
+---
+import ArrowRight from "../components/icons/ArrowRight.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<!-- 404 页不设 canonical，并由 BaseLayout 输出 noindex，避免错误页被收录 -->
+<BaseLayout
+    title="页面不存在｜EcomCanopy 易贸森"
+    description="这个地址没有对应页面。可以回到首页，或直接阅读案例与笔记。"
+    noCanonical
+>
+    <section class="container not-found">
+        <div class="not-found__code">404 / NOT FOUND</div>
+        <h1 class="not-found__title">这个地址没有页面。</h1>
+        <p class="not-found__text">
+            链接可能已经过期，或者地址少写了一个字符。可以从下面两处继续。
+        </p>
+        <div class="not-found__actions">
+            <a class="button" href="/">
+                回到首页
+                <ArrowRight />
+            </a>
+            <a class="button button--ghost" href="/cases/">阅读案例与笔记</a>
+        </div>
+    </section>
+</BaseLayout>
+
+<style>
+    .not-found {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 62vh;
+        padding-block: 120px;
+    }
+
+    .not-found__code {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        letter-spacing: 0.12em;
+        color: var(--accent);
+    }
+
+    .not-found__title {
+        margin-top: 20px;
+        font-family: var(--font-serif);
+        font-size: clamp(32px, 5vw, 56px);
+        font-weight: 400;
+        line-height: 1.25;
+        color: var(--ink);
+    }
+
+    .not-found__text {
+        max-width: 560px;
+        margin-top: 18px;
+        font-size: 16px;
+        line-height: 1.8;
+        color: var(--body);
+    }
+
+    .not-found__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 36px;
+    }
+</style>

@@ -20,6 +20,8 @@
 - 新增桌面端与手机端视觉验收截图，存放于 `docs/design/qa/`。
 - 新增 VPS 灰云直连部署方案：`docs/deployment/vps-grey-cloud-plan.md`。
 - 新增 VPS 首次部署与运维手册：`docs/deployment/runbook.md`。
+- 新增 `docs/seo/geo-seo-plan-v1.0.md`（v1.1 确认稿）：13 项待确认问题已全部确认，含 robots.txt、sitemap 端点、JSON-LD、OG/Twitter、favicon 与 404 页方案。
+- 新增 SEO 资产与代码：`public/robots.txt`、`src/pages/sitemap.xml.ts`、首页与文章页 JSON-LD、OG 图（JPEG q88）、`logo-512.png`、`favicon.svg`、`src/pages/404.astro` 与 `scripts/makeBrandAssets.py`。
 
 ### Changed
 
@@ -39,6 +41,7 @@
 - 2026-11-24：按用户确认修订部署模型：新增受限 `deploy` 用户（无 sudo、无 Docker 权限），业务写权限先限制在 `/var/www/ecomcanopy.site`；站点根目录改为 `current/`，上传暂存与备份分别放入 `tmp/`、`releases/`；SSH 端口改为 `55222` 并重新生成密钥；VPS 需先安装 `rsync`；Caddyfile 确认为 `/etc/caddy/Caddyfile:ro` 只读 bind mount。同日随后把 `deploy` 权限扩展到 `/var/www`。同步更新部署方案、执行手册、冻结决策、状态快照与架构文档。
 - 2026-11-24：按用户确认把 `deploy` 权限范围扩大到 `/var/www`，以支持后续多站点发布；确认 Caddy 容器 `67021f66c770` 以 `caddy run --config /etc/caddy/Caddyfile --adapter caddyfile` 启动，宿主机 `/var/www` 只读挂载到容器 `/var/www`，宿主机 `/opt/docker-compose/caddy/Caddyfile` 只读挂载到容器 `/etc/caddy/Caddyfile`。同步更新部署方案、执行手册、冻结决策、状态快照与架构文档。
 - 2026-11-24：用户确认 Caddy 配置与 GitHub Actions Secrets 已就绪，批准进入实施阶段。新增 `scripts/release.sh` 与 `.github/workflows/deploy.yml`；发布脚本包含暂存上传、备份、`rsync --delay-updates`、健康检查与失败自动回滚；工作流仅由 `v*.*.*` tag 或手动 `workflow_dispatch` 触发。`pnpm build` 通过。
+- 2026-11-25：站内链接与 canonical 统一带尾斜杠，消除 `/cases`、`/cases/fulfillment-ai` 的 308 跳转；`BaseLayout` 增加 `ogImage`、`pageType`、`noCanonical` 三个 prop。
 
 ### Notes
 

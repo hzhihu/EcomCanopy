@@ -12,13 +12,43 @@ import {
     siteMeta,
     trustPoints,
 } from "../data/content";
+
+const siteUrl = Astro.site ?? new URL("https://ecomcanopy.site");
+const organizationId = new URL("/#organization", siteUrl).href;
+
+// 首页用 WebSite + Organization 建立实体；同页内定义，避免跨页 @id 悬空
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "Organization",
+            "@id": organizationId,
+            name: "EcomCanopy",
+            alternateName: "易贸森",
+            url: new URL("/", siteUrl).href,
+            logo: new URL("/images/logo-512.png", siteUrl).href,
+            email: siteMeta.email,
+            description: "跨境电商 × AI 的一人技术工作室，以 FDE 方式交付 AI Agent 与业务系统。",
+        },
+        {
+            "@type": "WebSite",
+            "@id": new URL("/#website", siteUrl).href,
+            name: "EcomCanopy",
+            url: new URL("/", siteUrl).href,
+            inLanguage: "zh-CN",
+            publisher: { "@id": organizationId },
+        },
+    ],
+};
 ---
 
 <BaseLayout
     title="EcomCanopy 易贸森｜跨境电商 × AI 一人技术工作室"
     description="EcomCanopy（易贸森）以 FDE 的方式，为跨境电商团队端到端交付 AI Agent 与业务系统。"
     activeNav="能力"
+    ogImage="/images/og-home.jpg"
 >
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
     <section class="hero container">
         <div class="hero__meta">
             <span>01 / 首页 — 一人技术工作室</span>
@@ -40,7 +70,7 @@ import {
                     AI Agent 与业务系统：从 Listing、订单、库存到海外仓与物流，代码直接写进真实流程里。
                 </p>
                 <div class="hero__actions">
-                    <a class="button" href="/cases">
+                    <a class="button" href="/cases/">
                         阅读案例与笔记
                         <ArrowRight class="hero__button-arrow" />
                     </a>
@@ -221,7 +251,7 @@ import {
                     里面写的是真实链路怎么拆、Agent 放在哪一步、哪些坑要提前避开。
                 </p>
                 <div class="cta-panel__footer">
-                    <a class="button button--small" href="/cases">
+                    <a class="button button--small" href="/cases/">
                         阅读案例与笔记
                         <ArrowRight />
                     </a>

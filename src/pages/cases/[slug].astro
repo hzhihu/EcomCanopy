@@ -18,21 +18,80 @@ const { article: pageArticle } = Astro.props;
 const [caseCode, caseCategory] = pageArticle.eyebrow.split("/").map((part) => part.trim());
 const authorName = pageArticle.author.replace("文 / ", "");
 const currentCase = `${caseCode} · ${caseCategory}`;
+const siteUrl = Astro.site ?? new URL("https://ecomcanopy.site");
+const pageUrl = new URL(`/cases/${pageArticle.slug}/`, siteUrl);
+// 正文日期是「2026.11.18」这种展示格式，结构化数据必须用 ISO 日期
+const publishedDate = pageArticle.date.replace(/\./g, "-");
+const organizationId = new URL("/#organization", siteUrl).href;
+const pageTitle = pageArticle.title.replace("\n", "");
+
+// JSON-LD 按单页解析，@id 引用必须在同一页内有定义，因此本页重新定义 Organization
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "Organization",
+            "@id": organizationId,
+            name: "EcomCanopy",
+            alternateName: "易贸森",
+            url: new URL("/", siteUrl).href,
+            logo: new URL("/images/logo-512.png", siteUrl).href,
+            email: siteMeta.email,
+            description: "跨境电商 × AI 的一人技术工作室，以 FDE 方式交付 AI Agent 与业务系统。",
+        },
+        {
+            "@type": "WebPage",
+            "@id": `${pageUrl.href}#webpage`,
+            url: pageUrl.href,
+            name: `${pageTitle}｜EcomCanopy`,
+            inLanguage: "zh-CN",
+        },
+        {
+            "@type": "Article",
+            headline: pageTitle,
+            // 刻意不带数字：结果区数据只对应当前这一篇案例，不适合放进机器可读断言
+            description: "从订单归集、库存同步到异常件预测的跨境履约工程记录。",
+            image: new URL(pageArticle.cover, siteUrl).href,
+            datePublished: publishedDate,
+            dateModified: publishedDate,
+            inLanguage: "zh-CN",
+            author: {
+                "@type": "Person",
+                name: authorName,
+                url: new URL("/", siteUrl).href,
+                sameAs: ["https://github.com/hzhihu"],
+            },
+            publisher: { "@id": organizationId },
+            mainEntityOfPage: { "@id": `${pageUrl.href}#webpage` },
+        },
+        {
+            "@type": "BreadcrumbList",
+            itemListElement: [
+                { "@type": "ListItem", position: 1, name: "首页", item: new URL("/", siteUrl).href },
+                { "@type": "ListItem", position: 2, name: "案例与笔记", item: new URL("/cases/", siteUrl).href },
+                { "@type": "ListItem", position: 3, name: currentCase },
+            ],
+        },
+    ],
+};
 ---
 
 <BaseLayout
-    title={`${pageArticle.title.replace("\n", " ")}｜EcomCanopy`}
+    title={`${pageTitle}｜EcomCanopy`}
     description={pageArticle.intro}
     activeNav="案例与笔记"
     footerVariant="article"
+    pageType="article"
+    ogImage="/images/og-fulfillment-ai.jpg"
 >
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
     <section class="container">
         <div class="breadcrumb">
             <div class="breadcrumb__trail">
-                <span><a href="/">首页</a> / <a href="/cases">案例与笔记</a> /</span>
+                <span><a href="/">首页</a> / <a href="/cases/">案例与笔记</a> /</span>
                 <span class="breadcrumb__current">{currentCase}</span>
             </div>
-            <a class="breadcrumb__back" href="/cases">
+            <a class="breadcrumb__back" href="/cases/">
                 <ArrowLeft />
                 返回案例与笔记
             </a>
@@ -217,7 +276,7 @@ const currentCase = `${caseCode} · ${caseCategory}`;
             </div>
         </div>
         <div class="article-tail__back-row">
-            <a class="button button--dark article-tail__back" href="/cases">
+            <a class="button button--dark article-tail__back" href="/cases/">
                 返回案例与笔记，看全部文章
             </a>
         </div>
@@ -229,7 +288,7 @@ const currentCase = `${caseCode} · ${caseCategory}`;
                 <span class="related-section__kicker">05 / 继续阅读</span>
                 <h2 class="related-section__title">接着往下读</h2>
             </div>
-            <a class="related-section__more" href="/cases">
+            <a class="related-section__more" href="/cases/">
                 <span>查看全部 52 篇<span class="related-section__more-suffix">笔记</span></span>
                 <ArrowRight />
             </a>
