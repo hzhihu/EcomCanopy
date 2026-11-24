@@ -1,0 +1,93 @@
+name: Deploy
+
+on:
+    push:
+        tags:
+            - "v*.*.*"
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+concurrency:
+    group: production-deploy
+    cancel-in-progress: false
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Show release info
+              run: |
+                  echo "Ref: $GITHUB_REF"
+                  echo "Commit SHA: $GITHUB_SHA"
+
+            - name: Setup pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 12.9.1
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  cache: pnpm
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Build
+              run: pnpm build
+
+            - name: Upload dist
+              uses: actions/upload-artifact@v4
+              with:
+                  name: dist
+                  path: dist
+                  if-no-files-found: error
+                  retention-days: 7
+
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+        environment:
+            name: production
+            url: https://ecomcanopy.site
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Download dist
+              uses: actions/download-artifact@v4
+              with:
+                  name: dist
+                  path: dist
+
+            - name: Prepare SSH
+              env:
+                  VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+                  VPS_KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+              run: |
+                  set -euo pipefail
+                  mkdir -p "$HOME/.ssh"
+                  chmod 700 "$HOME/.ssh"
+                  printf '%s\n' "$VPS_SSH_KEY" > "$HOME/.ssh/id_ed25519"
+                  chmod 600 "$HOME/.ssh/id_ed25519"
+                  printf '%s\n' "$VPS_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
+                  chmod 600 "$HOME/.ssh/known_hosts"
+
+            - name: Deploy
+              env:
+                  VPS_HOST: ${{ secrets.VPS_HOST }}
+                  VPS_PORT: ${{ secrets.VPS_PORT }}
+                  VPS_USER: ${{ secrets.VPS_USER }}
+              run: |
+                  set -euo pipefail
+                  export VPS_SSH_KEY_PATH="$HOME/.ssh/id_ed25519"
+                  export VPS_KNOWN_HOSTS_PATH="$HOME/.ssh/known_hosts"
+                  bash scripts/release.sh

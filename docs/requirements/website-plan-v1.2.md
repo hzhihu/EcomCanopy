@@ -5,13 +5,15 @@
 **核心方向：Cross-border Commerce × AI**
 **网站语言：简体中文**
 **技术方案：Astro + TypeScript + 静态部署**
-**部署环境：NAS Docker + Nginx + Cloudflare Tunnel**
+**部署环境：NAS Docker + Nginx + Cloudflare Tunnel（历史方案，已被 2026-11-22 部署架构修订取代）**
 
-> **执行状态说明（2026-11-22）**
+> **执行状态说明（2026-11-23）**
 >
 > 本文保留为 V1.2 历史需求基线，不再代表当前交付状态。用户已授权以 Ardot 设计稿为唯一视觉与内容基准，最新约束见 `docs/decisions.md` 的「2026-11-22 · 方向变更」。
 >
 > 与本次方向冲突时，以该决策为准。当前有效范围是首页、案例与笔记、文章详情共 3 个页面，每页包含桌面端与手机端；导航为「能力 / 交付物 / 合作方式 / 案例与笔记」。本文第 5、6、9.1、9.3、11、14、18、19 节中涉及旧导航、旧路由、旧页面范围、旧阶段顺序与旧内容模型的描述，均应按该决策理解。
+>
+> 部署环境也已调整：第 9.4 节与 Phase 5 中的 NAS / Cloudflare Tunnel / Nginx 描述被 `docs/decisions.md` 的部署架构修订取代。Caddy 已以 Docker 容器在 VPS 独立部署，站点根目录为 `/var/www/ecomcanopy.site/current`；当前方案为「现有 Caddy + 静态目录发布」，不再由本仓库管理 Caddy 或使用 GHCR 运行时。
 >
 > 当前实现状态见 `CONTEXT.md` 与 `docs/design/qa/design-parity-audit.md`。
 

@@ -1,11 +1,11 @@
 # ARCHITECTURE.md —— 技术架构
 
-状态：**Phase 2 已实现并通过视觉验收；生产部署未开始**
-最后核对：2026-11-22
+状态：**Phase 2 已实现并通过视觉验收；发布脚本与工作流已创建，首次生产发布待执行**
+最后核对：2026-11-24
 视觉与内容基准：Ardot 文件 `749492056765475`
 约束优先级：`docs/decisions.md` → `docs/requirements/*` → 其他文档
 
-本文描述当前仓库的实际实现，并单独标注尚未实施的部署计划。
+本文描述当前仓库的实际实现，并标注尚未验证的部署环节。
 
 ---
 
@@ -33,7 +33,7 @@ EcomCanopy V1.0 是纯静态内容站：
 | `lucide-astro` | 依赖已安装 | 当前页面图标仍以本地 SVG 组件为主 |
 | LoliNet 字体 CDN | 中英文字体加载 | 已实现 |
 | pnpm | 依赖管理与脚本 | 已实现 |
-| Nginx + Docker + Cloudflare Tunnel | 生产部署 | 计划中，尚未实现 |
+| Caddy（VPS 独立管理）+ 静态目录 | 生产部署 | Caddy 已运行；本站静态内容尚未发布 |
 
 当前未使用：
 
@@ -218,24 +218,41 @@ pnpm check
 
 ## 9. 部署计划
 
-以下链路尚未落地，属于后续阶段：
+Caddy 已在 VPS 以 Docker 容器独立部署（容器 `caddy`，ID `67021f66c770`，镜像 `caddy:2.11.2-geoip`），并已为 `https://ecomcanopy.site/` 提供 HTTPS。当前首页是 `Demo Site` 占位页，3 个目标页面尚未发布。
+
+已确认的挂载与启动方式：
+
+```text
+宿主机 /var/www                                  -> 容器 /var/www（只读）
+宿主机 /opt/docker-compose/caddy/Caddyfile        -> 容器 /etc/caddy/Caddyfile（只读）
+启动命令：caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
+```
+
+本站部署链路调整为静态目录发布：
 
 ```text
 访客
- └─ Cloudflare DNS (ecomcanopy.site)
-     └─ Cloudflare Tunnel
-         └─ NAS
-             └─ Docker
-                 └─ Nginx + Astro 静态文件
+ └─ Cloudflare DNS (ecomcanopy.site, DNS only / 灰云)
+     └─ VPS 公网 IP
+         └─ 现有 Caddy
+             └─ /var/www/ecomcanopy.site/current
+                 └─ Astro 静态文件
 ```
 
-生产部署仍需补充：
+已创建发布自动化：
 
-- `Dockerfile`。
-- `docker-compose.yml`。
-- Nginx 配置。
-- 健康检查、日志、版本标签与回滚流程。
-- Cloudflare Tunnel 的 hostname 规则与 HTTPS 验证。
+- `scripts/release.sh`：上传到 `tmp/<timestamp>`、备份 `current/`、`rsync --delay-updates` 发布、健康检查、失败自动回滚。
+- `.github/workflows/deploy.yml`：`v*.*.*` tag 或手动 `workflow_dispatch` 触发，构建 `dist` 后调用发布脚本；推送 `main` 不自动发布。
+
+首次发布前仍需确认：
+
+- `/opt/docker-compose/caddy/Caddyfile` 的 `root` 指向 `/var/www/ecomcanopy.site/current`。
+- `/var/www/ecomcanopy.site`、`current/`、`tmp/`、`releases/` 与 `/var/www/.deploy-home` 的权限。
+- `deploy` 可以执行 `rsync`，但无 `sudo`、无 Docker 权限。
+- GitHub `production` Environment 的审批规则与 Secrets 已生效。
+- 首次发布后验收 3 个页面、图片、缓存头、`healthz`、`www` 与回滚。
+
+本仓库不再构建 Docker 运行时镜像，也不使用 GHCR。详细方案见 `docs/deployment/vps-grey-cloud-plan.md`。本站不使用 Cloudflare Tunnel；现有 `cloudflared` 容器如服务其他站点则保留，只移除本站 hostname。
 
 Skills Hub 使用独立仓库、独立容器与独立子域名，不包含在本仓库的页面实现中。
 
